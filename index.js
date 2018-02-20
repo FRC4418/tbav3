@@ -1,5 +1,7 @@
 var baseUrl = "www.thebluealliance.com/api/v3";
 
+//NOTE: Arrow functions used in promise handlers for their lack of a "this" object
+
 var https = require("https");
 
 class BlueAlliance {
@@ -20,7 +22,7 @@ class BlueAlliance {
 	//Query API
 	callTBA(request) {
 		var key = this.key;
-		return new Promise(function(resolve) {
+		return new Promise((resolve) => {
 			https.request({
 				protocol: "https:",
 				host: "www.thebluealliance.com",
@@ -28,7 +30,7 @@ class BlueAlliance {
 				headers: {
 					"X-TBA-Auth-Key": key
 				}
-			},function(res) {
+			},(res) => {
 				var data = "";
 				res.on("data",function(d) {
 					data += String(d);
@@ -50,19 +52,17 @@ class BlueAlliance {
 		return this.callTBA(`/team/frc${teamNumber}/event/${year}${eventCode}/status`);
 	}
 	//Get Matches for team
-	getMatchesForTeam(team,eventKey) {
-		var self = this;
-		return new Promise(function(resolve) {
-			self.callTBA(`/team/frc${team}/event/${eventKey}/matches`).then(function(data) {
-				resolve(self.sortMatches(data));
+	getMatchesForTeam(teamNumber,eventCode) {
+		return new Promise((resolve) => {
+			this.callTBA(`/team/frc${teamNumber}/event/${eventCode}/matches`).then((data) => {
+				resolve(this.sortMatches(data));
 			});
 		});
 	}
 	//Get next match
-	getNextMatch(number,eventCode) {
-		var self = this;
-		return new Promise(function(resolve,reject) {
-			self.getMatchesForTeam(number,`${new Date().getFullYear()}${eventCode}`).then(function(matches) {
+	getNextMatch(teamNumber,eventCode) {
+		return new Promise((resolve,reject) => {
+			this.getMatchesForTeam(teamNumber,`${new Date().getFullYear()}${eventCode}`).then((matches) => {
 				for (var i = 0; i < matches.length; i++) {
 					if(!matches[i].actual_time) {
 						resolve(matches[i]);
@@ -71,7 +71,7 @@ class BlueAlliance {
 				}
 				reject("Matches not available");
 				return;
-			}).catch(function(err) {
+			}).catch((err) => {
 				throw new Error(err);
 			});
 		});
