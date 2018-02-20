@@ -1,0 +1,25 @@
+{
+  "name": "tbav3",
+  "version": "1.0.0",
+  "description": "Node.js wrapper for the blue alliance v3 api.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/FRC4418/tbav3.git"
+  },
+  "keywords": [
+    "thebluealliance",
+    "bluealliance",
+    "frc",
+    "events-api"
+  ],
+  "author": "Shaun Keys",
+  "license": "Unlicense",
+  "bugs": {
+    "url": "https://github.com/FRC4418/tbav3/issues"
+  },
+  "homepage": "https://github.com/FRC4418/tbav3#readme"
+}
