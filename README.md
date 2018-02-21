@@ -46,7 +46,7 @@ tba.getTeamAtEvent(teamNumber,eventCode,/*optional*/ year).then((rankings) => {
 ```
 
 ```javascript
-tba.getMatchesForTeam(teamNumber,eventCode).then((matches) => {
+tba.getMatchesForTeam(teamNumber,eventCode,/*optional*/ year).then((matches) => {
 	doStuff(matches); //Pre-sorted in chronological order
 });
 ```

@@ -52,9 +52,10 @@ class BlueAlliance {
 		return this.callTBA(`/team/frc${teamNumber}/event/${year}${eventCode}/status`);
 	}
 	//Get Matches for team
-	getMatchesForTeam(teamNumber,eventCode) {
+	getMatchesForTeam(teamNumber,eventCode,year) {
+		if(!year) var year = new Date().getFullYear();
 		return new Promise((resolve) => {
-			this.callTBA(`/team/frc${teamNumber}/event/${eventCode}/matches`).then((data) => {
+			this.callTBA(`/team/frc${teamNumber}/event/${year}${eventCode}/matches`).then((data) => {
 				resolve(this.sortMatches(data));
 			});
 		});
@@ -62,7 +63,7 @@ class BlueAlliance {
 	//Get next match
 	getNextMatch(teamNumber,eventCode) {
 		return new Promise((resolve,reject) => {
-			this.getMatchesForTeam(teamNumber,`${new Date().getFullYear()}${eventCode}`).then((matches) => {
+			this.getMatchesForTeam(teamNumber,eventCode).then((matches) => {
 				for (var i = 0; i < matches.length; i++) {
 					if(!matches[i].actual_time) {
 						resolve(matches[i]);
